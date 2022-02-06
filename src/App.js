@@ -1,10 +1,8 @@
-import { Container } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import Employee from "./components/Employee";
 import Nav from "./components/Nav";
 import Filter from "./components/Filter";
-import { Grid } from "@chakra-ui/react";
-
-import { useEffect, useState } from "react";
+import { Grid, Container } from "@chakra-ui/react";
 
 function App() {
   const [employeeData, setEmployeeData] = useState(null);
@@ -18,7 +16,8 @@ function App() {
   const ageRange = (index) => {
     setSelectedAgeRange(index);
   };
-  const reset = (state) => {
+  const reset = () => {
+    setStringVal("");
     setFilteredData(null);
   };
   const handleItChange = (event) => {
@@ -37,21 +36,6 @@ function App() {
       });
   }, []);
   useEffect(() => {
-    // if (selectedSalaryRange && selectedAgeRange) {
-    //   const resSalary = employeeData.filter(function (oneEmployee) {
-    //     return (
-    //       oneEmployee.employee_salary >= selectedSalaryRange.start &&
-    //       oneEmployee.employee_salary < selectedSalaryRange.end
-    //     );
-    //   });
-    //   const resAge = employeeData.filter(function (oneEmployee) {
-    //     return (
-    //       oneEmployee.employee_age >= selectedAgeRange.start &&
-    //       oneEmployee.employee_age < selectedAgeRange.end
-    //     );
-    //   });
-    //   setFilteredData(resSalary.filter((value) => resAge.includes(value)));
-    // }
     if (
       selectedSalaryRange &&
       selectedSalaryRange.start &&
@@ -76,7 +60,9 @@ function App() {
     }
     if (stringVal) {
       const res = employeeData.filter(function (oneEmployee) {
-        return oneEmployee.employee_name.toLowerCase().match(stringVal);
+        return oneEmployee.employee_name
+          .toLowerCase()
+          .match(stringVal.toLowerCase());
       });
       setFilteredData(res);
     }
@@ -88,7 +74,11 @@ function App() {
 
   return (
     <Container padding="8" maxW="container.xl">
-      <Nav handleItChange={handleItChange} />
+      <Nav
+        handleItChange={handleItChange}
+        defaultValue={stringVal}
+        reset={reset}
+      />
       <Filter salaryRange={salaryRange} ageRange={ageRange} reset={reset} />
       <Grid
         templateColumns={{
@@ -101,6 +91,7 @@ function App() {
         {filteredData
           ? filteredData?.map((data) => <Employee data={data} key={data.id} />)
           : employeeData?.map((data) => <Employee data={data} key={data.id} />)}
+        {filteredData && !filteredData?.length ? <p>No results :/</p> : ""}
       </Grid>
     </Container>
   );

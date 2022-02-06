@@ -1,10 +1,15 @@
-import { Box } from "@chakra-ui/react";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
-import { ChevronDownIcon, RepeatIcon } from "@chakra-ui/icons";
-import { HStack } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
 import { useState } from "react";
+import {
+  Box,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
+import { ChevronDownIcon, RepeatIcon } from "@chakra-ui/icons";
 
 function Filter({ salaryRange, ageRange, reset }) {
   const [selectedSalRange, setSelectedSalRange] = useState(null);
@@ -167,15 +172,6 @@ function Filter({ salaryRange, ageRange, reset }) {
           >
             Reset
           </Button>
-          {/* <Button
-            variant="ghost"
-            leftIcon={<AddIcon />}
-            border={"1.35262px dashed #D1D2D9"}
-            fontSize="14px"
-            fontWeight="regular"
-          >
-            More Filters
-          </Button> */}
         </HStack>
       </Box>
     </>

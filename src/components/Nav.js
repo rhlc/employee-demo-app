@@ -1,11 +1,16 @@
-import { Flex } from "@chakra-ui/react";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
+  Heading,
+} from "@chakra-ui/react";
+
 import { ReactComponent as InovatyvLogo } from "./../assets/static/inovatyv.svg";
 import { Search2Icon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
 
-function Nav({ handleItChange }) {
+function Nav({ handleItChange, reset }) {
   return (
     <Flex
       alignItems="center"
@@ -14,7 +19,14 @@ function Nav({ handleItChange }) {
     >
       <Box>
         <Flex alignItems={"baseline"}>
-          <a href="https://inovatyv.com" target="_blank" rel="noreferrer">
+          <a
+            href="https://rahulchoudhary.dev"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => {
+              reset(true);
+            }}
+          >
             <InovatyvLogo />
           </a>
 
@@ -35,9 +47,12 @@ function Nav({ handleItChange }) {
           <InputLeftElement pointerEvents="none" children={<Search2Icon />} />
           <Input
             type="text"
-            placeholder="Try Searching John"
+            placeholder="Try Searching Rhonda"
             onChange={(e) => {
               handleItChange(e);
+            }}
+            onFocus={(e) => {
+              reset(true);
             }}
           />
         </InputGroup>

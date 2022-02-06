@@ -5,7 +5,6 @@ import Filter from "./components/Filter";
 import { Grid } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-import myData from "./data.json";
 
 function App() {
   const [employeeData, setEmployeeData] = useState(null);
@@ -26,19 +25,16 @@ function App() {
     setStringVal(event.target.value);
   };
   useEffect(() => {
-    // fetch("http://dummy.restapiexample.com/api/v1/employees", {
-    //   method: "GET",
-    //   redirect: "follow",
-    // })
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     setEmployeeData(response);
-    //     localStorage.setItem("fetchedData", JSON.stringify(response));
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
-    setEmployeeData(myData.data);
+    fetch("https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setEmployeeData(response);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   }, []);
   useEffect(() => {
     // if (selectedSalaryRange && selectedAgeRange) {
@@ -85,16 +81,11 @@ function App() {
       setFilteredData(res);
     }
     return () => {
-      // if (selectedSalaryRange && selectedAgeRange) {
-      //   setSelectedSalaryRange(null);
-      //   setSelectedAgeRange(null);
-      // }
       if (selectedSalaryRange) setSelectedSalaryRange(null);
       if (selectedAgeRange) setSelectedAgeRange(null);
-      // if (stringVal) setStringVal(null);
     };
   }, [selectedSalaryRange, selectedAgeRange, employeeData, stringVal]);
-  console.log(filteredData);
+
   return (
     <Container padding="8" maxW="container.xl">
       <Nav handleItChange={handleItChange} />

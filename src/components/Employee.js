@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import myData from "./../emp.json";
 
 function Employee(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,32 +24,23 @@ function Employee(props) {
   const [selectedProfileId, setSelectedProfileId] = useState(null);
 
   useEffect(() => {
-    // if (selectedProfileId) {
-    //   let headers = new Headers();
-    //   headers.append(
-    //     "user-agent",
-    //     "'Mozilla/5.0 (Macintosh; PPC Mac OS X 10_8_7 rv:5.0; en-US) AppleWebKit/533.31.5 (KHTML, like Gecko) Version/4.0 Safari/533.31.5'"
-    //   );
-    //   fetch(
-    //     `http://dummy.restapiexample.com/api/v1/employee/${selectedProfileId}`,
-    //     {
-    //       method: "GET",
-    //       headers: headers,
-    //       redirect: "follow",
-    //     }
-    //   )
-    //     .then((response) => response.json())
-    //     .then((response) => setProfileData(response))
-    //     .catch((error) => console.log("error", error));
-    // }
-
-    setProfileData(myData);
+    if (selectedProfileId) {
+      fetch(
+        `https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee/${selectedProfileId}`,
+        {
+          method: "GET",
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => setProfileData(response))
+        .catch((error) => console.log("error", error));
+    }
   }, [selectedProfileId]);
 
   const handleDownloadEvent = (e) => {
     setSelectedProfileId(props.data.id);
     fetch(
-      `http://dummy.restapiexample.com/api/v1/employee/${selectedProfileId}`,
+      `https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee/${selectedProfileId}`,
       {
         method: "GET",
         redirect: "follow",
@@ -59,11 +49,11 @@ function Employee(props) {
       .then((response) => response.json())
       .then((response) => {
         const url = window.URL.createObjectURL(
-          new Blob([JSON.stringify(response.data)])
+          new Blob([JSON.stringify(response)])
         );
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `${response.data.employee_name}.json`);
+        link.setAttribute("download", `${response.employee_name}.json`);
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
@@ -149,20 +139,20 @@ function Employee(props) {
                   <Box boxSize="sm" letterSpacing="wide">
                     <Image
                       src={
-                        profileData?.data.profile_image
-                          ? profileData?.data.profile_image
+                        profileData?.profile_image
+                          ? profileData?.profile_image
                           : "https://robohash.org/886a347549ad3704f5718183ba7ffa6a?set=set2&bgset=bg2&size=200x200"
                       }
-                      alt={profileData?.data.employee_name}
+                      alt={profileData?.employee_name}
                     />
                     <Text fontWeight={"semibold"} fontSize={"13px"}>
-                      Name: {profileData?.data.employee_name}
+                      Name: {profileData?.employee_name}
                     </Text>
                     <Text fontWeight={"semibold"} fontSize={"13px"}>
-                      Salary: {profileData?.data.employee_salary}
+                      Salary: {profileData?.employee_salary}
                     </Text>
                     <Text fontWeight={"semibold"} fontSize={"13px"}>
-                      Age: {profileData?.data.employee_age}
+                      Age: {profileData?.employee_age}
                     </Text>
                   </Box>
                 </Flex>

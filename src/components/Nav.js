@@ -34,7 +34,7 @@ function Nav({ handleItChange }) {
         <InputGroup width={{ base: "20rem", md: "18rem", lg: "40rem" }}>
           <InputLeftElement pointerEvents="none" children={<Search2Icon />} />
           <Input
-            type="tel"
+            type="text"
             placeholder="Try Searching John"
             onChange={(e) => {
               handleItChange(e);

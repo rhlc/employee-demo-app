@@ -1,15 +1,18 @@
 import { Box } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
-import { ChevronDownIcon, RepeatIcon, AddIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, RepeatIcon } from "@chakra-ui/icons";
 import { HStack } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
+import { useState } from "react";
 
 function Filter({ salaryRange, ageRange, reset }) {
+  const [selectedSalRange, setSelectedSalRange] = useState(null);
+  const [selectedAgeRange, setSelectedAgeRange] = useState(null);
   return (
     <>
       <Box
-        padding={"14px"}
+        padding={{ base: "0px", md: "8px", lg: "14px" }}
         border={"0.901745px solid rgba(209, 210, 217, 0.3)"}
         marginTop={"25px"}
         marginBottom={"25px"}
@@ -19,7 +22,11 @@ function Filter({ salaryRange, ageRange, reset }) {
             Salary Range
           </Text>
           <Box>
-            <Menu>
+            <Menu
+              onClose={() => {
+                setSelectedAgeRange(null);
+              }}
+            >
               <>
                 <MenuButton
                   as={Button}
@@ -28,48 +35,52 @@ function Filter({ salaryRange, ageRange, reset }) {
                   fontWeight="regular"
                   background={"none"}
                 >
-                  All
+                  {selectedSalRange ? selectedSalRange : "All"}
                 </MenuButton>
                 <MenuList>
                   <MenuItem
-                    onClick={(e) => {
-                      e.preventDefault();
-                      salaryRange({ start: 1, end: 100000 });
+                    onClick={() => {
+                      salaryRange({ start: 1, end: 200 });
+                      setSelectedSalRange("1 to 200");
                     }}
                   >
-                    1 to 100000
+                    1 to 200
                   </MenuItem>
                   <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
-                      salaryRange({ start: 100000, end: 200000 });
+                      salaryRange({ start: 200, end: 400 });
+                      setSelectedSalRange("200 to 400");
                     }}
                   >
-                    100000 to 200000
+                    200 to 400
                   </MenuItem>
                   <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
-                      salaryRange({ start: 200000, end: 300000 });
+                      salaryRange({ start: 400, end: 600 });
+                      setSelectedSalRange("400 to 600");
                     }}
                   >
-                    200000 to 300000
+                    400 to 600
                   </MenuItem>
                   <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
-                      salaryRange({ start: 300000, end: 400000 });
+                      salaryRange({ start: 600, end: 800 });
+                      setSelectedSalRange("600 to 800");
                     }}
                   >
-                    300000 to 400000
+                    600 to 800
                   </MenuItem>
                   <MenuItem
                     onClick={(e) => {
                       e.preventDefault();
-                      salaryRange({ start: 400000, end: 20000000 });
+                      salaryRange({ start: 800, end: 10000000 });
+                      setSelectedSalRange("800 and more");
                     }}
                   >
-                    400000 and beyond
+                    800 and more
                   </MenuItem>
                 </MenuList>
               </>
@@ -79,7 +90,11 @@ function Filter({ salaryRange, ageRange, reset }) {
             Age
           </Text>
           <Box>
-            <Menu>
+            <Menu
+              onClose={() => {
+                setSelectedSalRange(null);
+              }}
+            >
               <MenuButton
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
@@ -87,29 +102,32 @@ function Filter({ salaryRange, ageRange, reset }) {
                 fontWeight="regular"
                 background={"none"}
               >
-                All
+                {selectedAgeRange ? selectedAgeRange : "All"}
               </MenuButton>
               <MenuList>
                 <MenuItem
                   onClick={(e) => {
                     e.preventDefault();
-                    ageRange({ start: 1, end: 20 });
+                    ageRange({ start: 1, end: 18 });
+                    setSelectedAgeRange("0 to 18");
                   }}
                 >
-                  0 to 20
+                  0 to 18
                 </MenuItem>
                 <MenuItem
                   onClick={(e) => {
                     e.preventDefault();
-                    ageRange({ start: 20, end: 25 });
+                    ageRange({ start: 18, end: 25 });
+                    setSelectedAgeRange("18 to 25");
                   }}
                 >
-                  20 to 25
+                  18 to 25
                 </MenuItem>
                 <MenuItem
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 25, end: 30 });
+                    setSelectedAgeRange("25 to 30");
                   }}
                 >
                   25 to 30
@@ -118,6 +136,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 30, end: 35 });
+                    setSelectedAgeRange("30 to 35");
                   }}
                 >
                   30 to 35
@@ -126,6 +145,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 35, end: 100 });
+                    setSelectedAgeRange("35 and beyond");
                   }}
                 >
                   35 and beyond
@@ -141,11 +161,13 @@ function Filter({ salaryRange, ageRange, reset }) {
             fontWeight="regular"
             onClick={(e) => {
               reset(true);
+              setSelectedAgeRange(null);
+              setSelectedSalRange(null);
             }}
           >
             Reset
           </Button>
-          <Button
+          {/* <Button
             variant="ghost"
             leftIcon={<AddIcon />}
             border={"1.35262px dashed #D1D2D9"}
@@ -153,7 +175,7 @@ function Filter({ salaryRange, ageRange, reset }) {
             fontWeight="regular"
           >
             More Filters
-          </Button>
+          </Button> */}
         </HStack>
       </Box>
     </>

@@ -6,11 +6,10 @@ import {
   Box,
   Heading,
 } from "@chakra-ui/react";
-
 import { ReactComponent as InovatyvLogo } from "./../assets/static/inovatyv.svg";
 import { Search2Icon } from "@chakra-ui/icons";
 
-function Nav({ handleItChange, reset }) {
+function Nav({ handleItChange, focusInput }) {
   return (
     <Flex
       alignItems="center"
@@ -19,14 +18,7 @@ function Nav({ handleItChange, reset }) {
     >
       <Box>
         <Flex alignItems={"baseline"}>
-          <a
-            href="https://rahulchoudhary.dev"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => {
-              reset(true);
-            }}
-          >
+          <a href="https://rahulchoudhary.dev" target="_blank" rel="noreferrer">
             <InovatyvLogo />
           </a>
 
@@ -36,6 +28,7 @@ function Nav({ handleItChange, reset }) {
             fontSize={{ base: "12px", md: "20px", lg: "24px" }}
             fontWeight={"800"}
             color={"#94969E"}
+            marginBottom={{ base: "15px" }}
           >
             &nbsp; CODING CHALLENGE
           </Heading>
@@ -51,8 +44,11 @@ function Nav({ handleItChange, reset }) {
             onChange={(e) => {
               handleItChange(e);
             }}
-            onFocus={(e) => {
-              reset(true);
+            onFocus={() => {
+              focusInput(true);
+            }}
+            onBlur={() => {
+              focusInput(false);
             }}
           />
         </InputGroup>

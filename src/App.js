@@ -10,6 +10,7 @@ function App() {
   const [selectedAgeRange, setSelectedAgeRange] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [stringVal, setStringVal] = useState(null);
+  const [resetFromSearch, setResetFromSearch] = useState(null);
   const salaryRange = (index) => {
     setSelectedSalaryRange(index);
   };
@@ -17,12 +18,16 @@ function App() {
     setSelectedAgeRange(index);
   };
   const reset = () => {
-    setStringVal("");
+    setStringVal(null);
     setFilteredData(null);
   };
   const handleItChange = (event) => {
     setStringVal(event.target.value);
   };
+  const focusInputFunc = (state) => {
+    setResetFromSearch(state);
+  };
+
   useEffect(() => {
     fetch("https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee", {
       method: "GET",
@@ -65,21 +70,23 @@ function App() {
           .match(stringVal.toLowerCase());
       });
       setFilteredData(res);
+      setStringVal(null);
     }
     return () => {
       if (selectedSalaryRange) setSelectedSalaryRange(null);
       if (selectedAgeRange) setSelectedAgeRange(null);
     };
   }, [selectedSalaryRange, selectedAgeRange, employeeData, stringVal]);
-
+  console.log(filteredData);
   return (
     <Container padding="8" maxW="container.xl">
-      <Nav
-        handleItChange={handleItChange}
-        defaultValue={stringVal}
+      <Nav handleItChange={handleItChange} focusInput={focusInputFunc} />
+      <Filter
+        salaryRange={salaryRange}
+        ageRange={ageRange}
         reset={reset}
+        resetFromSearch={resetFromSearch}
       />
-      <Filter salaryRange={salaryRange} ageRange={ageRange} reset={reset} />
       <Grid
         templateColumns={{
           base: "repeat(1, 1fr)",

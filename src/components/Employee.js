@@ -38,9 +38,10 @@ function Employee(props) {
   }, [selectedProfileId]);
 
   const handleDownloadEvent = (e) => {
-    setSelectedProfileId(props.data.id);
+    console.log(props.data.id);
+    setSelectedProfileId(props.id);
     fetch(
-      `https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee/${selectedProfileId}`,
+      `https://61ffc91d5e1c4100174f6f6b.mockapi.io/employee/${props.data.id}`,
       {
         method: "GET",
         redirect: "follow",

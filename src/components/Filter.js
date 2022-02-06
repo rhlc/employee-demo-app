@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Menu,
@@ -6,14 +6,21 @@ import {
   MenuList,
   MenuItem,
   Button,
-  HStack,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, RepeatIcon } from "@chakra-ui/icons";
 
-function Filter({ salaryRange, ageRange, reset }) {
+function Filter({ salaryRange, ageRange, reset, resetFromSearch }) {
   const [selectedSalRange, setSelectedSalRange] = useState(null);
   const [selectedAgeRange, setSelectedAgeRange] = useState(null);
+  useEffect(() => {
+    if (resetFromSearch) {
+      setSelectedSalRange(null);
+      setSelectedAgeRange(null);
+    }
+  }, [resetFromSearch]);
+
   return (
     <>
       <Box
@@ -22,8 +29,12 @@ function Filter({ salaryRange, ageRange, reset }) {
         marginTop={"25px"}
         marginBottom={"25px"}
       >
-        <HStack spacing="10px">
-          <Text fontSize="sm" color={"#94969E"}>
+        <Stack
+          spacing="10px"
+          direction={["column", "row"]}
+          alignItems={"center"}
+        >
+          <Text fontSize={{ base: "xs", md: "sm" }} color={"#94969E"}>
             Salary Range
           </Text>
           <Box>
@@ -40,10 +51,13 @@ function Filter({ salaryRange, ageRange, reset }) {
                   fontWeight="regular"
                   background={"none"}
                 >
-                  {selectedSalRange ? selectedSalRange : "All"}
+                  <Text fontSize={{ base: "xs", md: "sm" }}>
+                    {selectedSalRange ? selectedSalRange : "All"}
+                  </Text>
                 </MenuButton>
                 <MenuList>
                   <MenuItem
+                    fontSize={{ base: "xs", md: "sm" }}
                     onClick={() => {
                       salaryRange({ start: 1, end: 200 });
                       setSelectedSalRange("1 to 200");
@@ -52,6 +66,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                     1 to 200
                   </MenuItem>
                   <MenuItem
+                    fontSize={{ base: "xs", md: "sm" }}
                     onClick={(e) => {
                       e.preventDefault();
                       salaryRange({ start: 200, end: 400 });
@@ -61,6 +76,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                     200 to 400
                   </MenuItem>
                   <MenuItem
+                    fontSize={{ base: "xs", md: "sm" }}
                     onClick={(e) => {
                       e.preventDefault();
                       salaryRange({ start: 400, end: 600 });
@@ -70,6 +86,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                     400 to 600
                   </MenuItem>
                   <MenuItem
+                    fontSize={{ base: "xs", md: "sm" }}
                     onClick={(e) => {
                       e.preventDefault();
                       salaryRange({ start: 600, end: 800 });
@@ -79,6 +96,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                     600 to 800
                   </MenuItem>
                   <MenuItem
+                    fontSize={{ base: "xs", md: "sm" }}
                     onClick={(e) => {
                       e.preventDefault();
                       salaryRange({ start: 800, end: 10000000 });
@@ -91,7 +109,7 @@ function Filter({ salaryRange, ageRange, reset }) {
               </>
             </Menu>
           </Box>
-          <Text fontSize="sm" color={"#94969E"}>
+          <Text fontSize={{ base: "xs", md: "sm" }} color={"#94969E"}>
             Age
           </Text>
           <Box>
@@ -107,10 +125,13 @@ function Filter({ salaryRange, ageRange, reset }) {
                 fontWeight="regular"
                 background={"none"}
               >
-                {selectedAgeRange ? selectedAgeRange : "All"}
+                <Text fontSize={{ base: "xs", md: "sm" }}>
+                  {selectedAgeRange ? selectedAgeRange : "All"}
+                </Text>
               </MenuButton>
               <MenuList>
                 <MenuItem
+                  fontSize={{ base: "xs", md: "sm" }}
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 1, end: 18 });
@@ -120,6 +141,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   0 to 18
                 </MenuItem>
                 <MenuItem
+                  fontSize={{ base: "xs", md: "sm" }}
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 18, end: 25 });
@@ -129,6 +151,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   18 to 25
                 </MenuItem>
                 <MenuItem
+                  fontSize={{ base: "xs", md: "sm" }}
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 25, end: 30 });
@@ -138,6 +161,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   25 to 30
                 </MenuItem>
                 <MenuItem
+                  fontSize={{ base: "xs", md: "sm" }}
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 30, end: 35 });
@@ -147,6 +171,7 @@ function Filter({ salaryRange, ageRange, reset }) {
                   30 to 35
                 </MenuItem>
                 <MenuItem
+                  fontSize={{ base: "xs", md: "sm" }}
                   onClick={(e) => {
                     e.preventDefault();
                     ageRange({ start: 35, end: 100 });
@@ -162,7 +187,7 @@ function Filter({ salaryRange, ageRange, reset }) {
             variant="ghost"
             leftIcon={<RepeatIcon />}
             border={"1.35262px dashed #D1D2D9"}
-            fontSize="14px"
+            fontSize={{ base: "xs", md: "sm" }}
             fontWeight="regular"
             onClick={(e) => {
               reset(true);
@@ -170,9 +195,9 @@ function Filter({ salaryRange, ageRange, reset }) {
               setSelectedSalRange(null);
             }}
           >
-            Reset
+            <Text fontSize={{ base: "xs", md: "sm" }}>Reset</Text>
           </Button>
-        </HStack>
+        </Stack>
       </Box>
     </>
   );

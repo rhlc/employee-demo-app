@@ -1,12 +1,13 @@
-import { Box } from "@chakra-ui/react";
-import { Image } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
-import { Grid, GridItem } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
-import { Center } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/react";
-import { Flex } from "@chakra-ui/react";
 import {
+  Flex,
+  Divider,
+  Center,
+  Text,
+  Grid,
+  GridItem,
+  Button,
+  Box,
+  Image,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -15,6 +16,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+
 import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 

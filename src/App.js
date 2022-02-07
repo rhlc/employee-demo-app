@@ -77,7 +77,7 @@ function App() {
       if (selectedAgeRange) setSelectedAgeRange(null);
     };
   }, [selectedSalaryRange, selectedAgeRange, employeeData, stringVal]);
-  console.log(filteredData);
+
   return (
     <Container padding="8" maxW="container.xl">
       <Nav handleItChange={handleItChange} focusInput={focusInputFunc} />
